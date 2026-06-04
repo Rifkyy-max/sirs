@@ -1,14 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://pfyzkxtmbyygmdblugbg.supabase.co'
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_W_sibpv2RUe8I-BQqjQ17A_l-UVa61N'
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://yoyckrqjgezapwgcynfl.supabase.co'
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_ghRwH4ciXhgfEmvjlbSiXg_3rLj9iJ7'
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 function getShortEmail(namaRs) {
   const name = namaRs.toLowerCase().replace(/rs\s*umum\s*daerah\s*|rs\s*umum\s*|rsu\s*|rs\s*/g, '')
   const shortName = name.split(' ')[0].replace(/[^a-z0-9]/g, '')
-  return `${shortName}@sirs.online`
+  return `${shortName}@vsense.online`
 }
 
 async function seed() {

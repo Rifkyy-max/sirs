@@ -51,7 +51,7 @@ export default function LoginPage() {
           <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm border border-white/20 shadow-sm">
             <Activity className="w-6 h-6 text-white" />
           </div>
-          <span className="text-xl font-semibold tracking-tight">SIRS Online</span>
+          <span className="text-xl font-semibold tracking-tight">V-SENSE Online</span>
         </div>
 
         <div className="relative z-10">
@@ -79,7 +79,7 @@ export default function LoginPage() {
               <div className="bg-cyan-50 p-2 rounded-lg border border-cyan-100">
                 <Activity className="w-6 h-6 text-cyan-600" />
               </div>
-              <span className="text-lg font-semibold tracking-tight text-cyan-700">SIRS Online</span>
+              <span className="text-lg font-semibold tracking-tight text-cyan-700">V-SENSE Online</span>
             </div>
             <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
               Masuk ke akun Anda

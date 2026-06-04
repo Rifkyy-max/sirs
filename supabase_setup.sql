@@ -1,4 +1,4 @@
--- SIRS Online Database Setup Script
+-- V-SENSE Online Database Setup Script
 -- Paste this into the Supabase SQL Editor
 
 -- 1. Create Tables

@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SIRS - Sistem Informasi Rumah Sakit",
+  title: "V-SENSE - Sistem Informasi Rumah Sakit",
   description: "Portal Pelaporan Kunjungan Pasien Rumah Sakit Terpadu",
 };
 

@@ -1,4 +1,4 @@
-# SIRS (Sistem Informasi Rumah Sakit)
+# V-SENSE (Sistem Informasi Rumah Sakit)
 
 Aplikasi portal pelaporan terpadu untuk rekapitulasi data kunjungan pasien (Laporan 3.5) dari seluruh Rumah Sakit ke Dinas Kesehatan tingkat daerah.
 
