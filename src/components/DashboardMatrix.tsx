@@ -15,6 +15,8 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
   const [isLoading, setIsLoading] = useState(true)
   const [isExportMenuOpen, setIsExportMenuOpen] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
+  const [userRole, setUserRole] = useState<string>('dinkes')
+  const [userRsId, setUserRsId] = useState<string>('')
 
   const currentMonth = new Date().getMonth() + 1 // 1-12
 
@@ -22,6 +24,12 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
     let mounted = true
     const load = async () => {
       setIsLoading(true)
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user && user.user_metadata) {
+        setUserRole(user.user_metadata.role || 'dinkes')
+        setUserRsId(user.user_metadata.rs_id || '')
+      }
+
       const { data } = await supabase
         .from('laporan_induk')
         .select('id, rs_id, bulan, tahun')
@@ -61,16 +69,19 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
 
   // Variabel untuk menyimpan bulan ini (angka 1-12)
   const isCurrentYear = tahun === new Date().getFullYear()
+
+  const visibleRS = initialRS.filter(rs => userRole === 'dinkes' || rs.id === userRsId)
+
   // Hitung jumlah RS yang sudah lapor bulan ini
-  const rsLaporBulanIni = isCurrentYear ? laporan.filter(l => l.bulan === currentMonth).length : 0
-  const totalRS = initialRS.length
+  const rsLaporBulanIni = isCurrentYear ? laporan.filter(l => l.bulan === currentMonth && visibleRS.some(v => v.id === l.rs_id)).length : 0
+  const totalRS = visibleRS.length
   // Hitung yang belum lapor (Total dikurangi yang sudah lapor)
   const rsBelumLapor = totalRS - rsLaporBulanIni
   // Rumus persentase kepatuhan: (Yang Lapor / Total RS) * 100
   const complianceRate = totalRS > 0 ? Math.round((rsLaporBulanIni / totalRS) * 100) : 0
 
   const exportMatrixToExcel = () => {
-    const dataToExport = initialRS.map(rs => {
+    const dataToExport = visibleRS.map(rs => {
       const rowData: Record<string, string | number> = {
         'Kode RS': rs.kode_rs,
         'Nama Rumah Sakit': rs.nama_rs
@@ -98,7 +109,7 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
   const exportDataLengkapToExcel = async () => {
     setIsExporting(true)
     try {
-      const { data: detailData, error } = await supabase
+      let detailDataQuery = supabase
         .from('laporan_induk')
         .select(`
           bulan,
@@ -115,6 +126,12 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
         `)
         .eq('tahun', tahun)
 
+      if (userRole === 'rs' && userRsId) {
+        detailDataQuery = detailDataQuery.eq('rs_id', userRsId)
+      }
+
+      const { data: detailData, error } = await detailDataQuery
+      
       if (error) throw error
 
       type DetailData = {
@@ -283,7 +300,7 @@ export default function DashboardMatrix({ initialRS }: { initialRS: RS[] }) {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-50">
-              {initialRS.map((rs) => (
+              {visibleRS.map((rs) => (
                 <tr key={rs.id} className="hover:bg-zinc-50/80 transition-colors group">
                   <td className="px-8 py-5 font-semibold text-zinc-800 sticky left-0 z-10 bg-white group-hover:bg-zinc-50/80 shadow-[1px_0_0_0_#f4f4f5] whitespace-nowrap transition-colors">
                     <span className="inline-block px-2 py-1 bg-zinc-100 rounded-md text-[10px] font-bold text-zinc-500 mr-3">{rs.kode_rs}</span>
