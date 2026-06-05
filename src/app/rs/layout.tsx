@@ -44,7 +44,7 @@ export default function RSLayout({ children }: { children: React.ReactNode }) {
             <Activity className="w-5 h-5 text-white" />
           </div>
           <div className="flex flex-col overflow-hidden">
-            <span className="font-bold text-lg tracking-tight text-white leading-tight">V-SENSE RS</span>
+            <span className="font-bold text-lg tracking-tight text-white leading-tight">V-SENSE</span>
             <span className="text-xs font-medium text-cyan-100 truncate mt-0.5" title={rsName}>{rsName}</span>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function RSLayout({ children }: { children: React.ReactNode }) {
               <Activity className="w-5 h-5 text-white" />
             </div>
             <div className="flex flex-col overflow-hidden">
-              <span className="font-semibold tracking-tight text-white leading-tight">V-SENSE RS</span>
+              <span className="font-semibold tracking-tight text-white leading-tight">V-SENSE</span>
               <span className="text-[10px] font-medium text-cyan-100 truncate leading-none mt-1">{rsName}</span>
             </div>
           </div>
