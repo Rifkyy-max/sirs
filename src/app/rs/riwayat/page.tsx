@@ -5,6 +5,9 @@ import Link from 'next/link'
 export default async function RiwayatPage() {
   const supabase = await createClient()
 
+  const { data: { user } } = await supabase.auth.getUser()
+  const rsId = user?.user_metadata?.rs_id
+
   const { data: laporan } = await supabase
     .from('laporan_induk')
     .select(`
@@ -15,6 +18,7 @@ export default async function RiwayatPage() {
       updated_at,
       rumah_sakit ( nama_rs )
     `)
+    .eq('rs_id', rsId)
     .order('tahun', { ascending: false })
     .order('bulan', { ascending: false })
 
